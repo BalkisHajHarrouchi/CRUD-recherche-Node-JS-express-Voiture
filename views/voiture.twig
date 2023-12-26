@@ -1,0 +1,48 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>Welcome {{ username }}</h1>
+  <div>
+    <form action="/voitures/create" method="POST">
+      <label for="matricule">Add a Vehicle</label>
+      <input type="number" id="matricule" name="matricule" placeholder="Matricule" required/>
+      <input type="text" id="marque" name="marque" placeholder="Marque" required/>
+      <input type="text" id="modele" name="modele" placeholder="Modele" required/>
+      <input type="submit" value="Save" />
+    </form>
+
+    <h2>Form list</h2>
+    <button onclick="list()">Vehicule list</button>
+    <form action="/voitures/recherche" method="POST">
+      <label for="matriculeSearch">Search a Vehicle</label>
+      <input type="number" id="matriculeSearch" name="matricule" placeholder="Matricule"/>
+      <input type="submit" value="Search" />
+    </form>
+    
+    <hr>
+
+    {% if RechVoiture is defined %}
+      {% if RechVoiture == "notFound" %}
+        <p><b>Vehicle not found</b></p>
+      {% else %}
+        <p><b>Matricule: </b>{{ RechVoiture.matricule }}</p>
+        <p><b>Marque: </b>{{ RechVoiture.marque }}</p>
+        <p><b>Modele: </b>{{ RechVoiture.modele }}</p>
+      {% endif %}
+    {% else %}
+      {% for voiture in Voitures %}
+        <p><b>Matricule: </b>{{ voiture.matricule }}</p>
+        <p><b>Marque: </b>{{ voiture.marque }}</p>
+        <p><b>Modele: </b>{{ voiture.modele }}</p>
+        <a href="/voitures/update/{{ voiture.id }}">Update</a>
+        <a href="/voitures/delete/{{ voiture.id }}">Delete</a>
+        <hr>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <script>
+ async function list() {
+      window.location.href = '/voitures';
+    }
+  </script>
+{% endblock %}

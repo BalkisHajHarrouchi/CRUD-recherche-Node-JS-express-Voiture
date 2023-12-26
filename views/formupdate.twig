@@ -1,0 +1,14 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <p>Welcome {{username}}</p>
+  <div>
+  <form action="/forms/update/{{User.id}}" method="POST" >
+  <label for="title">Update a User</label>
+  <input type="text" id="username" name="username" placeholder="Username" value="{{User.username}}"/>
+  <input type="password" id="password" name="password" placeholder="Password" value="{{User.password}}"/>
+  <input type="date" id="birthday" name="birthday" placeholder="Birthday" value="{{User.birthdate}}"/>
+  <input type="submit" value="Save" />
+  </form>
+  </div>
+{% endblock %}
